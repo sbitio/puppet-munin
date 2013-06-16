@@ -1,0 +1,18 @@
+# MANAGED BY PUPPET!
+
+[<%= @header %>]
+  address <%= @address %>
+<% if @use_node_name -%>
+  use_node_name yes
+<% end -%>
+<% if @contacts != '' -%>
+  contacts <%= @contacts %>
+<% end -%>
+<% if ! @update -%>
+  update no
+<% end -%>
+<% if @extra_configs -%>
+<%   @extra_configs.each do |config| -%>
+  <%= config %>
+<%   end -%>
+<% end -%>

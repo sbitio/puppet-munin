@@ -1,0 +1,13 @@
+# MANAGED BY PUPPET!
+
+[<%= @name %>;]
+<% if @node_order != '' -%>
+  node_order <%= @node_order %>
+<% end -%>
+<% if @contacts != '' -%>
+  contacts <%= @contacts %>
+<% end -%>
+<% if @local_address -%>
+  local_address <%= @local_address %>
+<% end -%>
+
