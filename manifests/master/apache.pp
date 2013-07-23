@@ -16,6 +16,7 @@ class munin::master::apache (
       tag              => 'munin',
       priority         => '020',
 #      server_aliases   => '192.168.8.90',
+      ssl_ports        => [],
       doc_root         => $munin::master::params::htmldir,
       dir_options      => 'None',
       dir_directives   => [
