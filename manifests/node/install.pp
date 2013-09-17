@@ -1,9 +1,11 @@
 class munin::node::install () {
   require munin::node::params
   
-  apt::force { $munin::node::params::package:
-    release => "squeeze-backports",
-    require => Apt::Source["backports"],
+  if ( $::lsbdistcodename = 'squeeze' ) {
+    apt::force { $munin::node::params::package:
+      release => "squeeze-backports",
+      require => Apt::Source["backports"],
+    }
   }
 
   package { $munin::node::params::package:
