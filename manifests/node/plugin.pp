@@ -52,7 +52,10 @@ define munin::node::plugin (
       default => $ensure,
     },
     target  => $plugin_file,
-    require => Munin::Node::Plugin::Conf[$config_keys],
+    require => [
+      Munin::Node::Plugin::Conf[$config_keys],
+      Munin::Node::Plugin::Required_package<| tag == $name |>,
+    ]
     notify  => Service[$munin::node::params::service_name],
   }
 }
