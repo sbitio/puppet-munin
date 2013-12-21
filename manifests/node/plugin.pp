@@ -46,7 +46,7 @@ define munin::node::plugin (
   # Ensure dependant packages installed
   case $ensure {
     present : {
-      munin:node:plugin:package_helper { $required_packages :
+      munin::node::plugin::package_helper { $required_packages :
         ensure => $ensure,
         before => File[$file_links],
       }
@@ -62,7 +62,7 @@ define munin::node::plugin (
   }
 }
 
-define munin:node:plugin:package_helper (
+define munin::node::plugin::package_helper (
   $package = $title,
   $ensure  = $munin::node::plugin::ensure,
 ) {
