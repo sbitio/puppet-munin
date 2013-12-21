@@ -34,13 +34,13 @@ define munin::node::plugin (
   # Can't use a selector until http://projects.puppetlabs.com/issues/5860 is fixed
   #$file_links = $sufixes ? {
   #  []      => "${munin::node::params::plugin_dir}/${name}",
-  #  default => prefix($sufixes, "${munin::node::params::plugin_dir}/${name}_"),
+  #  default => prefix($sufixes, "${munin::node::params::plugin_dir}/${name}"),
   #}
   if $sufixes == [] {
     $file_links = "${munin::node::params::plugin_dir}/${name}"
   }
   else {
-    $file_links = prefix($sufixes, "${munin::node::params::plugin_dir}/${name}_")
+    $file_links = prefix($sufixes, "${munin::node::params::plugin_dir}/${name}")
   }
 
   # Ensure dependant packages installed
