@@ -1,7 +1,7 @@
 class munin::node (
   $ensure      = present,
   $autoupgrade = true
-) {
+) inherits munin::node::params {
   case $ensure {
     /(present)/: {
       $dir_ensure = 'directory'

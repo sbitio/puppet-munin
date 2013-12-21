@@ -1,7 +1,7 @@
 class munin::master (
   $ensure      = present,
   $autoupgrade = true
-) {
+) inherits munin::master::params {
 
   case $ensure {
     /(present)/: {
