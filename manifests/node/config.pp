@@ -73,7 +73,7 @@ class munin::node::config () {
 
   create_resources(munin::node::plugin, hiera_hash('munin::node::plugins',{}), $defaults)
 
-  Munin::Node::Plugin <| tag == $::fqdn |>
+  Munin::Node::Plugin <| |>
   Munin::Node::Plugin <<| tag == $::fqdn |>>
 
 }
