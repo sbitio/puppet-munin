@@ -40,6 +40,7 @@ define munin::node::plugin (
     $file_links = "${munin::node::params::plugin_dir}/${name}"
   }
   else {
+    # TODO: add stdlib dependency
     $file_links = prefix($sufixes, "${munin::node::params::plugin_dir}/${name}")
   }
 
