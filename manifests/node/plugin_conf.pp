@@ -9,7 +9,7 @@ define munin::node::plugin::conf (
 
   $conf_file = "${munin::node::params::plugin_conf_dir}/${name}"
 
-  file { $plugin_file:
+  file { $conf_file:
     ensure  => $ensure,
     owner   => 'root',
     group   => 'root',
