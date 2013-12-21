@@ -1,6 +1,6 @@
 define munin::master::node (
   $master,
-  $address,
+  $address       = $title,
   $ensure        = $munin::master::ensure,
   $group         = '',
   $use_node_name = false,
