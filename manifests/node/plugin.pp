@@ -1,6 +1,5 @@
 define munin::node::plugin (
   $ensure            = present,
-  $group             = $name,
   $sufixes           = [],
   $config            = {},
   $source            = '',
