@@ -10,7 +10,7 @@ define munin::node::plugin (
 
   require munin::node::params
 
-  if $source != '' or content != '' {
+  if $source != '' or $content != '' {
     $plugin_file = "${munin::node::params::imported_scripts_dir}/${name}"
     file { $plugin_file:
       ensure => $ensure,
