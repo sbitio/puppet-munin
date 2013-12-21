@@ -1,11 +1,3 @@
-define munin:node:plugin:package_helper (
-  $package = title,
-  $ensure  = $munin::node::plugin::ensure,
-) {
-  if !defined(Package[$package]) {
-  }
-}
-
 define munin::node::plugin (
   $ensure            = present,
   $group             = $name,
@@ -67,5 +59,16 @@ define munin::node::plugin (
       default => $ensure,
     },
     target => $plugin_file,
+  }
+}
+
+define munin:node:plugin:package_helper (
+  $package = $title,
+  $ensure  = $munin::node::plugin::ensure,
+) {
+  if !defined(Package[$package]) {
+    package { $package :
+      ensure => $ensure
+    }
   }
 }
