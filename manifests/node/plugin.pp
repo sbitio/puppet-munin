@@ -1,10 +1,11 @@
 define munin::node::plugin (
-  $ensure  = present,
-  $group   = $name,
-  $sufixes = [],
-  $config  = {},
-  $source  = '',
-  $content = '',
+  $ensure            = present,
+  $group             = $name,
+  $sufixes           = [],
+  $config            = {},
+  $source            = '',
+  $content           = '',
+  $required_packages = [],
 ) {
 
   require munin::node::params
@@ -30,7 +31,28 @@ define munin::node::plugin (
     $plugin_file = "${munin::node::params::scripts_dir}/${name}"
   }
 
+  $file_links = $sufixes ? {
+    []      => "${munin::node::params::plugin_dir}/${name}",
+    default => prefix($sufixes, "${munin::node::params::plugin_dir}/${name}_"),
+  }
 
-  #link_dst?
-  
+  # Ensure dependant packages installed
+  case $ensure {
+    present : {
+      if ! defined(Package[$required_packages]) {
+        package { $required_packages :
+          ensure => $ensure,
+          before => File[$file_links],
+        }
+      }
+    }
+  }
+
+  file { $file_links :
+    ensure => $ensure ? {
+      present => link,
+      default => $ensure,
+    },
+    target => $plugin_file,
+  }
 }
