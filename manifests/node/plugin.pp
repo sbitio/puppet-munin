@@ -40,7 +40,7 @@ define munin::node::plugin (
     $file_links = "${munin::node::params::plugin_dir}/${name}"
   }
   else {
-    $file_links = prefix($sufixes, "${munin::node::params::plugin_dir}/${name}_"),
+    $file_links = prefix($sufixes, "${munin::node::params::plugin_dir}/${name}_")
   }
 
   # Ensure dependant packages installed
