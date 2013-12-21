@@ -28,9 +28,9 @@ class munin::master::config () {
     master  => $::fqdn,
     address => '127.0.0.1',
   }
-  @@munin::master::group { 'pruebas':
-    master  => $::fqdn,
-  }
+#  @@munin::master::group { 'pruebas':
+#    master  => $::fqdn,
+#  }
 
   $defaults = {
     master => $::fqdn,
