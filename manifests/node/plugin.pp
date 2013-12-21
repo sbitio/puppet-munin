@@ -55,14 +55,16 @@ define munin::node::plugin (
   }
 
   create_resources(munin::node::plugin::conf, $config, {})
+  $config_keys = keys($config)
 
   file { $file_links :
-    ensure => $ensure ? {
+    ensure  => $ensure ? {
       present => link,
       default => $ensure,
     },
-    target => $plugin_file,
-    notify => Service[$munin::node::params::service_name],
+    target  => $plugin_file,
+    require => Munin::Node::Plugin::Conf[$config_keys],
+    notify  => Service[$munin::node::params::service_name],
   }
 }
 
