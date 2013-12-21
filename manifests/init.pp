@@ -1,4 +1,4 @@
-import "*/*.pp"
+#import "*/*.pp"
 
 class munin {
   include munin::master

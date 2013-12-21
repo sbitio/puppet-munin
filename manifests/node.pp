@@ -1,3 +1,5 @@
+import "node/*.pp"
+
 class munin::node (
   $ensure      = present,
   $autoupgrade = true

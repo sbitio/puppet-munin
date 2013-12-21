@@ -44,16 +44,6 @@ define munin::node::plugin (
     $file_links = prefix($sufixes, "${munin::node::params::plugin_dir}/${name}")
   }
 
-  # Ensure dependant packages installed
-  case $ensure {
-    present : {
-      munin::node::plugin::package_helper { $required_packages :
-        ensure => $ensure,
-        before => File[$file_links],
-      }
-    }
-  }
-
   create_resources(munin::node::plugin::conf, $config, {})
   $config_keys = keys($config)
 
@@ -65,16 +55,5 @@ define munin::node::plugin (
     target  => $plugin_file,
     require => Munin::Node::Plugin::Conf[$config_keys],
     notify  => Service[$munin::node::params::service_name],
-  }
-}
-
-define munin::node::plugin::package_helper (
-  $package = $title,
-  $ensure  = $munin::node::plugin::ensure,
-) {
-  if !defined(Package[$package]) {
-    package { $package :
-      ensure => $ensure
-    }
   }
 }
