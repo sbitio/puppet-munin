@@ -64,9 +64,9 @@ class munin::node::config () {
     purge   => true,
   }
 
-  @@munin::node::plugin { 'munin-node':
-    tag => $::fqdn,
-  }
+#  @@munin::node::plugin { 'munin-node':
+#    tag => $::fqdn,
+#  }
 
   $defaults = {
   }
