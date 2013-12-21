@@ -54,6 +54,8 @@ define munin::node::plugin (
     }
   }
 
+  create_resources(munin::node::plugin::conf, $config, {})
+
   file { $file_links :
     ensure => $ensure ? {
       present => link,
