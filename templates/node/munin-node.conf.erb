@@ -47,12 +47,12 @@ allow <%= @allow %>
 # cidr_allow 127.0.0.1/32
 # cidr_allow 192.0.2.0/24
 # cidr_deny  192.0.2.42/32
-<% if @cidr_allow != '' -%>
+<% if @cidr_allow -%>
 <%   @cidr_allow.each do |allow| -%>
 cidr_allow <%= allow %>
 <%   end -%>
 <% end -%>
-<% if @cidr_deny != '' -%>
+<% if @cidr_deny -%>
 <%   @cidr_deny.each do |deny| -%>
 cidr_deny <%= deny %>
 <%   end -%>

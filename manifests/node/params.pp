@@ -3,8 +3,8 @@ class munin::node::params (
   $host       = '*',
   $port       = 4949,
   $allow      = '^127\.0\.0\.1$',
-  $cidr_allow = '',
-  $cidr_deny  = '',
+  $cidr_allow = [],
+  $cidr_deny  = [],
 ) {
   case $::operatingsystem {
     ubuntu, debian: {
