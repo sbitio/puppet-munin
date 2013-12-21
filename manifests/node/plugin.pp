@@ -59,7 +59,7 @@ define munin::node::plugin (
       default => $ensure,
     },
     target => $plugin_file,
-    notify => Service[$munin::node::service_name],
+    notify => Service[$munin::node::params::service_name],
   }
 }
 
