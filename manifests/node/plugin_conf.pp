@@ -19,7 +19,7 @@ define munin::node::plugin::conf (
       default => $source,
     },
     content => $content ? {
-      ''      => template(munin/node/plugin_conf.erb),
+      ''      => template('munin/node/plugin_conf.erb'),
       default => $content,
     },
   }
