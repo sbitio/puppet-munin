@@ -76,4 +76,7 @@ class munin::node::config () {
   Munin::Node::Plugin <| |>
   Munin::Node::Plugin <<| tag == $::fqdn |>>
 
+  Munin::Node::Plugin::Conf <| |>
+  Munin::Node::Plugin::Conf <<| tag == $::fqdn |>>
+
 }
