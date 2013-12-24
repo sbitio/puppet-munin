@@ -24,10 +24,10 @@ class munin::master::config () {
     purge   => true,
   }
 
-  @@munin::master::node { $::fqdn:
-    master  => $::fqdn,
-    address => '127.0.0.1',
-  }
+#  @@munin::master::node { $::fqdn:
+#    master  => $::fqdn,
+#    address => '127.0.0.1',
+#  }
 #  @@munin::master::group { 'pruebas':
 #    master  => $::fqdn,
 #  }

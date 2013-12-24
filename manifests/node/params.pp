@@ -1,10 +1,12 @@
 class munin::node::params (
-  $autoconf   = true,
-  $host       = '*',
-  $port       = 4949,
-  $allow      = '^127\.0\.0\.1$',
-  $cidr_allow = [],
-  $cidr_deny  = [],
+  $autoconf      = true,
+  $host          = '*',
+  $port          = 4949,
+  $allow         = '^127\.0\.0\.1$',
+  $cidr_allow    = [],
+  $cidr_deny     = [],
+  $node_master   = $::fqdn,
+  $node_defaults = {},
 ) {
   case $::operatingsystem {
     ubuntu, debian: {
