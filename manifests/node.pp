@@ -29,10 +29,13 @@ class munin::node (
   include munin::node::service
 
   $master_node_seed = {
-    name          => $::fqdn,
-    master        => $node_master,
+    master => $node_master,
   }
   # TODO: add stdlib as dependency
-  $master_node = merge($master_node_seed, $node_defaults)
+  $master_node = {
+    "${::fqdn}" => merge($master_node_seed, $node_defaults),
+  }
+  #notify { "---${master_node}---": }
   create_resources('@@munin::master::node', $master_node)
+
 }
