@@ -15,7 +15,7 @@ define munin::node::plugin (
       ensure => $ensure,
       owner   => 'root',
       group   => 'root',
-      mode    => '0644',
+      mode    => '0755',
       source  => $source ? {
         ''      => undef,
         default => $source,
