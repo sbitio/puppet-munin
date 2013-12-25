@@ -4,7 +4,7 @@ class munin::node::autoconf (
 
   require munin::node::params
 
-  if $avoid = [] {
+  if $avoid == [] {
     $filter = ''
   }
   else {
