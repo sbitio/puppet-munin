@@ -1,10 +1,18 @@
 define munin::node::plugin::required_package (
-  $ensure            = present,
+  $ensure = present,
 ) {
 
-  if ! defined(Package[$name]) {
-    package { $name :
-      ensure => $ensure,
+  case $ensure {
+    present : {
+      # TODO: add stdlib as dependency
+      ensure_packages($name)
+    }
+    absent  : {
+      if ! defined(Package[$name]) {
+        package { $name :
+          ensure => $ensure,
+        }
+      }
     }
   }
 }
