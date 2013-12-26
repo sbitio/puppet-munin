@@ -28,6 +28,14 @@
 # (Exactly one) directory to include all files from.
 includedir <%= @config_dir %>
 
+# This directive sets the resolution of the RRD files that are created by munin-graph and munin-cgi-graph.
+# Default is “normal”.
+# “huge” saves the complete data with 5 minute resolution for 400 days.
+# Changing this directive has no effect on existing graphs
+# See: https://munin.readthedocs.org/en/latest/reference/munin.conf.html#munin-conf
+# See: http://munin-monitoring.org/wiki/format-graph_data_size
+graph_data_size <%= @graph_data_size %>
+
 # You can choose the time reference for "DERIVE" like graphs, and show
 # "per minute", "per hour" values instead of the default "per second"
 #
