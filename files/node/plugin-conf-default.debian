@@ -119,3 +119,7 @@ group munin
 user postgres
 env.PGUSER postgres
 env.PGPORT 5432
+
+[fail2ban]
+user root
+
