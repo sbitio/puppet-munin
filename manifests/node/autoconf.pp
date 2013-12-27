@@ -9,9 +9,9 @@ class munin::node::autoconf () {
     $filter_file = '/tmp/munin_autoconf_filter'
 
     concat{ 'munin_node_autoconf_excl' :
-      path => $filter_file,
+      path  => $filter_file,
+      force => true,
     }
-
 
 #    if $avoid == [] {
       $filter = ''
