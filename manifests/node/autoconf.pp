@@ -6,14 +6,14 @@ class munin::node::autoconf () {
     # TODO: add concat as dependency
     include concat::setup
 
-    $filter_file = '/tmp/munin_autoconf_filter'
+    $filter_file = '/tmp/puppet_munin_autoconf_filter'
 
     concat{ 'munin_node_autoconf_excl' :
       path  => $filter_file,
       force => true,
     }
 
-    $filter = "$(cat ${filter_file})"
+    $filter = "| sed -f ${filter_file})"
   
     exec {"munin-node-configure":
       #refreshonly => true,
