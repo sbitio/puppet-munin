@@ -13,7 +13,7 @@ class munin::node::autoconf () {
       force => true,
     }
 
-    $filter = "| sed -f ${filter_file})"
+    $filter = "| sed -f ${filter_file}"
   
     exec {"munin-node-configure":
       #refreshonly => true,
