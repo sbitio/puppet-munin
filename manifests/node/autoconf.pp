@@ -14,17 +14,18 @@ class munin::node::autoconf () {
     }
 
     $filter = "| sed -f ${filter_file}"
+
+    Munin::Node::Autoconf::Exclusion <| |> {
+      before => Exec['munin-node-configure'],
+    }
   
-    exec {"munin-node-configure":
+    exec { 'munin-node-configure' :
       #refreshonly => true,
       command     => "munin-node-configure --shell ${filter} | sh",
       unless      => "[ $(munin-node-configure --shell ${filter} 2> /dev/null | wc -l) = 0 ]",
       path        => ["/usr/bin", "/usr/sbin", "/bin"],
       notify      => Service[$munin::node::params::service_name],
-      require     => [
-        Munin::Node::Autoconf::Exclusion <| |>,
-        Concat['munin_node_autoconf_excl'],
-      ],
+      require     => Concat['munin_node_autoconf_excl'],
     }
   }
 
