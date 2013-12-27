@@ -6,7 +6,7 @@ define munin::node::autoconf::exclusion () {
 
     concat::fragment { "munin_node_autoconf_excl-${name}" :
       target  => 'munin_node_autoconf_excl',
-      content => "sed '\@${::munin::node::params::scripts_dir}/${name}@d'",
+      content => "| sed '\\@${::munin::node::params::scripts_dir}/${name}@d' ",
     }
 
   }

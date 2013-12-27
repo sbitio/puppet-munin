@@ -13,12 +13,7 @@ class munin::node::autoconf () {
       force => true,
     }
 
-#    if $avoid == [] {
-      $filter = ''
-#    }
-#    else {
-#      $filter = inline_template('<% avoid.each do |item| %>| sed "\@<%= item %>@d"<% end%>')
-#    }
+    $filter = "$(cat ${filter_file})"
   
     exec {"munin-node-configure":
       #refreshonly => true,
