@@ -22,6 +22,7 @@ define munin::node::plugin::conf (
       ''      => template('munin/node/plugin_conf.erb'),
       default => $content,
     },
+    notify  => Service[$munin::node::params::service_name],
   }
 
 }
