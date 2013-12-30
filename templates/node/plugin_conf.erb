@@ -1,8 +1,12 @@
 # MANAGED BY PUPPET!
 
 <% if @config -%>
-[<%= @name %>]  
-<%   @config.each do |line| -%>
+<%   @config.each_pair do |key, value_hash| -%>
+[<%= key %>]
+<%     if value_hash -%>
+<%       value_hash.each do |value| %>
 <%= value %>
-<%   end -%>  
+<%       end -%>  
+<%     end -%>
+<%   end -%>
 <% end -%>
