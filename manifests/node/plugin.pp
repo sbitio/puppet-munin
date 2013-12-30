@@ -1,7 +1,7 @@
 define munin::node::plugin (
   $ensure            = present,
   $sufixes           = [],
-  $config            = {},
+  $config            = [],
   $source            = '',
   $content           = '',
   $required_packages = [],
@@ -43,8 +43,17 @@ define munin::node::plugin (
     $file_links = prefix($sufixes, "${munin::node::params::plugin_dir}/${name}")
   }
 
-  $conf = {
-    "${name}" => $config,
+  if $config != [] {
+    if $sufixex != [] {
+      $conf = {
+        "${name}_*" => $config,
+      }
+    }
+    else {
+      $conf = {
+        "${name}" => $config,
+      }
+    }
   }
   create_resources(munin::node::plugin::conf, $conf, {})
 
@@ -58,7 +67,6 @@ define munin::node::plugin (
       default => $ensure,
     },
     target  => $plugin_file,
-    require => Munin::Node::Plugin::Conf[$name],
     notify  => Service[$munin::node::params::service_name],
   }
 }
