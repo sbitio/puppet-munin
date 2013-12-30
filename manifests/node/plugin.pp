@@ -61,7 +61,7 @@ define munin::node::plugin (
     }
   }
   else {
-    $iplugin_conf = {}
+    $plugin_conf = {}
   }
   create_resources(munin::node::plugin::conf, $plugin_conf, {})
 
