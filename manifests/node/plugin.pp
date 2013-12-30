@@ -55,6 +55,9 @@ define munin::node::plugin (
       }
     }
   }
+  else {
+    $conf = {}
+  }
   create_resources(munin::node::plugin::conf, $conf, {})
 
   Munin::Node::Plugin::Required_package <| tag == $name |> {
