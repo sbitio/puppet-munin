@@ -24,6 +24,7 @@ define munin::node::plugin (
         ''      => undef,
         default => $content,
       },
+      notify => Service[$munin::node::params::service_name],
     }
   }
   else {
