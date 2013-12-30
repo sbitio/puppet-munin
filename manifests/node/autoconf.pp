@@ -18,6 +18,9 @@ class munin::node::autoconf () {
     Munin::Node::Autoconf::Exclusion <| |> {
       before => Exec['munin-node-configure'],
     }
+    Munin::Node::Plugin::Conf <| |> {
+      before => Exec['munin-node-configure'],
+    }
   
     exec { 'munin-node-configure' :
       #refreshonly => true,
