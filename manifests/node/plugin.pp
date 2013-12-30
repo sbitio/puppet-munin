@@ -44,7 +44,7 @@ define munin::node::plugin (
   }
 
   $conf = {
-    $name => $config,
+    "${name}" => $config,
   }
   create_resources(munin::node::plugin::conf, $conf, {})
 
