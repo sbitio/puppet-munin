@@ -43,8 +43,10 @@ define munin::node::plugin (
     $file_links = prefix($sufixes, "${munin::node::params::plugin_dir}/${name}")
   }
 
-  create_resources(munin::node::plugin::conf, $config, {})
-  $config_keys = keys($config)
+  $conf = {
+    $name => $config,
+  }
+  create_resources(munin::node::plugin::conf, $conf, {})
 
   Munin::Node::Plugin::Required_package <| tag == $name |> {
     before => File[$file_links],
@@ -56,7 +58,7 @@ define munin::node::plugin (
       default => $ensure,
     },
     target  => $plugin_file,
-    require => Munin::Node::Plugin::Conf[$config_keys],
+    require => Munin::Node::Plugin::Conf[$name],
     notify  => Service[$munin::node::params::service_name],
   }
 }

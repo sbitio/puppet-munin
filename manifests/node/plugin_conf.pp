@@ -1,6 +1,6 @@
 define munin::node::plugin::conf (
   $ensure            = present,
-  $config            = {},
+  $config            = [],
   $source            = '',
   $content           = '',
 ) {
