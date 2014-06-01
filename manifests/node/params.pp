@@ -11,7 +11,7 @@ class munin::node::params (
   case $::operatingsystem {
     ubuntu, debian: {
       #$package         = 'munin-node'
-      $package         = [ 'munin-node', 'munin-plugins',]
+      $package         = [ 'munin-node', 'munin-plugins-core', 'munin-plugins-extra',]
       $service_name    = 'munin-node'
       $config_file     = '/etc/munin/munin-node.conf'
       $plugin_dir      = '/etc/munin/plugins'
