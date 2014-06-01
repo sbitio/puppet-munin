@@ -7,6 +7,12 @@ class munin::node::install () {
       require => Apt::Source["backports"],
     }
   }
+  if ( $::lsbdistcodename == 'wheezy' ) {
+    apt::force { $munin::node::params::package:
+      release => "wheezy-backports",
+      require => Apt::Source["backports"],
+    }
+  }
 
   package { $munin::node::params::package:
     ensure => $munin::node::package_ensure,
