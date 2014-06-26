@@ -78,8 +78,8 @@ graph_strategy <%= @graph_strategy %>
 # - cgi html has some bugs, mostly you still have to launch munin-html by hand
 # 
 #html_strategy cron
-<% if scope.lookupvar('munin::master::params::html_strategy') != '' -%>
-html_strategy <%= scope.lookupvar('munin::master::params::html_strategy') %>
+<% if @html_strategy -%>
+html_strategy <%= @html_strategy %>
 <% end -%>
 
 # munin-update runs in parallel.
