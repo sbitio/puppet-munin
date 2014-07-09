@@ -2,12 +2,13 @@ class munin::master::config () {
   require munin::master::params
   require munin::master::install
 
-  $config_dir      = $munin::master::params::config_dir
-  $graph_strategy  = $munin::master::params::graph_strategy
-  $html_strategy  = $munin::master::params::html_strategy
+  $config_dir       = $munin::master::params::config_dir
+  $graph_strategy   = $munin::master::params::graph_strategy
+  $html_strategy    = $munin::master::params::html_strategy
+  $rrdcached_socket = $munin::master::params::rrdcached_socket
   # TODO: add support for other contact modifiers http://munin-monitoring.org/wiki/munin.conf
-  $contact         = $munin::master::params::contact
-  $graph_data_size = $munin::master::params::graph_data_size
+  $contact          = $munin::master::params::contact
+  $graph_data_size  = $munin::master::params::graph_data_size
 
   file { $munin::master::params::config_file :
     ensure  => $munin::master::ensure,
