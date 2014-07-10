@@ -39,6 +39,15 @@ class munin::master::apache (
         '  </IfModule>',
         '  Allow from all',
         '</Location>',
+        'ScriptAlias /munin-cgi/munin-cgi-html /usr/lib/munin/cgi/munin-cgi-html',
+        '<Location /munin-cgi/munin-cgi-html>',
+        '  <IfModule mod_fcgid.c>',
+        '      SetHandler fcgid-script',
+        '  </IfModule>',
+        '  <IfModule !mod_fcgid.c>',
+        '      SetHandler cgi-script',
+        '  </IfModule>',
+        '</Location>',
       ],
 
     }
