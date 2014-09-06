@@ -14,7 +14,7 @@ class munin::master::apache (
 
     @apache::vhost { $::munin::master::http_name :
       ensure        => $ensure,
-      priority      => '020',
+      priority      => '40',
       docroot       => $::munin::master::htmldir,
       directories   => [
         { 
@@ -82,7 +82,7 @@ class munin::master::apache (
         {
           comment      => 'Images2',
           rewrite_cond => '%{REQUEST_URI} !^/static',
-          rewrite_rule => 'RewriteRule ^/(.*.png)$  /munin-cgi/munin-cgi-graph/$1 [L,PT]',
+          rewrite_rule => '^/(.*.png)$  /munin-cgi/munin-cgi-graph/$1 [L,PT]',
         },
       ],
       # TODO : better suport of ip tagging
