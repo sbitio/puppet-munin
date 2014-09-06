@@ -26,14 +26,17 @@ class munin::master (
   include munin::master::install
   include munin::master::config
 
-  case $munin::master::params::http_server {
+  case $http_server {
     'apache': {
       include munin::master::apache
+    }
+    'apache_niteman': {
+      include munin::master::apache_niteman
     }
     '': {
     }
     default: {
-      fail('ensure http_server must be apache or empty')
+      fail("unsupported http_server = ${http_server} param")
     }
   }
 
