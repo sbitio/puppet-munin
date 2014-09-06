@@ -15,7 +15,7 @@ class munin::master::apache (
     @apache::vhost { $::munin::master::http_name :
       ensure        => $ensure,
       priority      => '020',
-      doc_root      => $::munin::master::htmldir,
+      docroot       => $::munin::master::htmldir,
       directories   => [
         { 
           path            => $::munin::master::htmldir,
@@ -66,7 +66,6 @@ class munin::master::apache (
         {
           comment      => 'Favicon',
           rewrite_rule => "^/favicon.ico ${::munin::master::htmldir}/static/favicon.ico [L]",
-
         },
         {
           comment      => 'Static files',
