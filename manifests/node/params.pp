@@ -8,24 +8,29 @@ class munin::node::params (
   $node_master   = $::fqdn,
   $node_defaults = {},
 ) {
-  case $::operatingsystem {
-    ubuntu, debian: {
-      #$package         = 'munin-node'
-      $package         = [ 'munin-node', 'munin-plugins-core', 'munin-plugins-extra',]
-      $service_name    = 'munin-node'
-      $config_file     = '/etc/munin/munin-node.conf'
-      $plugin_dir      = '/etc/munin/plugins'
-      $plugin_conf_dir = '/etc/munin/plugin-conf.d'
-      $scripts_dir     = '/usr/share/munin/plugins'
-      $plugin_conf_src = 'puppet:///modules/munin/node/plugin-conf-default.debian'
-    }
-#    redhat, centos: {
-#    }
+
+  $package              = $::osfamily ? {
+    debian => [
+      'munin-node',
+      'munin-plugins-core',
+      'munin-plugins-extra',
+    ],
+    redhat => 'munin-node',
+  }
+  $service_name         = 'munin-node'
+  $config_file          = '/etc/munin/munin-node.conf'
+  $plugin_dir           = '/etc/munin/plugins'
+  $plugin_conf_dir      = '/etc/munin/plugin-conf.d'
+  $scripts_dir          = '/usr/share/munin/plugins'
+  # TODO
+  $plugin_conf_src      = "puppet:///modules/munin/node/plugin-conf-default.${::osfamily}"
+  $imported_scripts_dir = "${scripts_dir}/puppet-imported"
+
+  case $::osfamily {
+    debian, redhat: { }
     default: {
-      fail("Unsupported platform: ${::operatingsystem}")
+      fail("Unsupported platform: ${::osfamily}")
     }
   }
-
-  $imported_scripts_dir = "${scripts_dir}/puppet-imported"
 
 }

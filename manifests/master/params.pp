@@ -9,17 +9,23 @@ class munin::master::params (
   $html_strategy    = undef,
   $rrdcached_socket = undef,
 ) {
-  case $::operatingsystem {
-    ubuntu, debian: {
-      $package     = 'munin'
-      $config_file = '/etc/munin/munin.conf'
-      $config_dir  = '/etc/munin/munin-conf.d'
-      $htmldir     = '/var/cache/munin/www'
-    }
-#    redhat, centos: {
-#    }
+
+  $package     = 'munin'
+  $config_file = '/etc/munin/munin.conf'
+
+  $config_dir  = $::osfamily ? {
+    debian => '/etc/munin/munin-conf.d',
+    redhat => '/etc/munin/conf.d',
+  }
+  $htmldir     = $::osfamily ? {
+    debian => '/var/cache/munin/www',
+    redhat => '/var/www/html/munin',
+  }
+
+  case $::osfamily {
+    debian, redhat: { }
     default: {
-      fail("Unsupported platform: ${::operatingsystem}")
+      fail("Unsupported platform: ${::osfamily}")
     }
   }
 
