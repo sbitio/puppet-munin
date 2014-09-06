@@ -2,7 +2,10 @@ class munin::node::params (
   $autoconf      = true,
   $host          = '*',
   $port          = 4949,
-  $allow         = '^127\.0\.0\.1$',
+  $allow         = [
+    '^127\.0\.0\.1$',
+    '^::1$',
+  ],
   $cidr_allow    = [],
   $cidr_deny     = [],
   $node_master   = $::fqdn,
