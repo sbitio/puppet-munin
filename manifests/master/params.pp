@@ -10,16 +10,34 @@ class munin::master::params (
   $rrdcached_socket = undef,
 ) {
 
-  $package     = 'munin'
-  $config_file = '/etc/munin/munin.conf'
-
-  $config_dir  = $::osfamily ? {
+  $uses_cgi       = ( $graph_strategy == 'cgi' or $html_strategy == 'cgi' )
+  $package        = $::osfamily ? {
+    debian => 'munin',
+    redhat => $uses_cgi ? {
+      true    => $http_server ? {
+        apache  => [ 'munin', 'munin-cgi' ],
+        nginx   => [ 'munin', 'munin-nginx' ],
+        default => 'munin',
+      },
+      default => 'munin',
+    },
+  }
+  $config_file    = '/etc/munin/munin.conf'
+  $config_dir     = $::osfamily ? {
     debian => '/etc/munin/munin-conf.d',
     redhat => '/etc/munin/conf.d',
   }
-  $htmldir     = $::osfamily ? {
+  $htmldir        = $::osfamily ? {
     debian => '/var/cache/munin/www',
     redhat => '/var/www/html/munin',
+  }
+  $cgi_graph_path = $::osfamily ? {
+    debian => '/usr/lib/munin/cgi/munin-cgi-graph',
+    redhat => '/var/www/cgi-bin/munin-cgi-graph',
+  }
+  $cgi_html_path  = $::osfamily ? {
+    debian => '/usr/lib/munin/cgi/munin-cgi-html',
+    redhat => '/var/www/cgi-bin/munin-cgi-html',
   }
 
   case $::osfamily {

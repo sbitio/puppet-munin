@@ -8,76 +8,87 @@ class munin::master::apache (
   }
 
   if $enabled and defined('::apache') {
-    #if !defined(Apache::Module['fcgi']) {
-    #  @apache::module { 'fcgid':
-    #    ensure  => $ensure,
-    #    package => 'libapache2-mod-fcgid',
-    #  }
-    #}
-    #@apache::vhost { $munin::master::params::http_name:
-    #  ensure           => $ensure,
-# TO#-DO: better suport of ip tagging
-    #  tag              => 'munin',
-    #  priority         => '020',
-#   #   server_aliases   => '192.168.8.90',
-    #  ssl_ports        => [],
-    #  doc_root         => $munin::master::params::htmldir,
-    #  dir_options      => 'None',
-    #  dir_directives   => [
-    #    'Allow from all',
-    #    '<IfModule mod_expires.c>',
-    #    '  ExpiresActive On',
-    #    '  ExpiresDefault M310',
-    #    '</IfModule>',
-    #  ],
-    #  vhost_directives => [
-    #    '# Ensure we can run (fast)cgi scripts',
-    #    'ScriptAlias /munin-cgi/munin-cgi-graph /usr/lib/munin/cgi/munin-cgi-graph',
-    #    '<Location /munin-cgi/munin-cgi-graph>',
-    #    '  Options +ExecCGI',
-    #    '  <IfModule mod_fcgid.c>',
-    #    '      SetHandler fcgid-script',
-    #    '  </IfModule>',
-    #    '  <IfModule !mod_fcgid.c>',
-    #    '      SetHandler cgi-script',
-    #    '  </IfModule>',
-    #    '  Allow from all',
-    #    '</Location>',
-    #    'ScriptAlias /munin-cgi/munin-cgi-html /usr/lib/munin/cgi/munin-cgi-html',
-    #    '<Location /munin-cgi/munin-cgi-html>',
-    #    '  <IfModule mod_fcgid.c>',
-    #    '      SetHandler fcgid-script',
-    #    '  </IfModule>',
-    #    '  <IfModule !mod_fcgid.c>',
-    #    '      SetHandler cgi-script',
-    #    '  </IfModule>',
-    #    '</Location>',
-    #    '<IfModule !mod_rewrite.c>',
-    #    '    # required because we serve out of the cgi directory and URLs are relative',
-    #    '    Alias /munin-cgi/munin-cgi-html/static /var/cache/munin/www/static',
-    #    '    RedirectMatch ^/$ /munin-cgi/munin-cgi-html/',
-    #    '</IfModule>',
-    #    '<IfModule mod_rewrite.c>',
-    #    '    # Rewrite rules to serve traffic from the root instead of /munin-cgi',
-    #    '    RewriteEngine On',
-    #    '    # Static files',
-    #    '    RewriteRule ^/favicon.ico /var/cache/munin/www/static/favicon.ico [L]',
-    #    '    RewriteRule ^/static/(.*) /var/cache/munin/www/static/$1          [L]',
-    #    '    # HTML',
-    #    '    RewriteRule ^(/.*\.html)?$           /munin-cgi/munin-cgi-html/$1 [PT]',
-    #    '    # Images',
-    #    '    RewriteRule ^/munin-cgi/munin-cgi-graph/(.*) /$1',
-    #    '    RewriteCond %{REQUEST_URI}                 !^/static',
-    #    '    RewriteRule ^/(.*.png)$  /munin-cgi/munin-cgi-graph/$1 [L,PT]',
-    #    '</IfModule>',
-    #    '<IfModule !mod_rewrite.c>',
-    #    '    <Location /munin-cgi/munin-cgi-html/static>',
-    #    '            # this needs to be at the end to override the above sethandler directives',
-    #    '            Options -ExecCGI',
-    #    '            SetHandler None',
-    #    '    </Location>',
-    #    '</IfModule>',
-    #  ],
-    #}
+    if $ensure == 'present' {
+      require ::apache::mod::fcgid
+    }
+
+    @apache::vhost { $::munin::master::http_name :
+      ensure        => $ensure,
+      priority      => '020',
+      doc_root      => $::munin::master::htmldir,
+      directories   => [
+        { 
+          path            => $::munin::master::htmldir,
+          override        => [ 'All' ],
+          options         => [ 'None' ],
+          custom_fragment => '
+            <IfModule mod_expires.c>
+              ExpiresActive On
+              ExpiresDefault M310
+            </IfModule>',
+        },
+        {
+          path            => '/munin-cgi/munin-cgi-graph',
+          provider        => 'location',
+          options         => [ '+ExecCGI' ],
+          custom_fragment => '
+            <IfModule mod_fcgid.c>
+                SetHandler fcgid-script
+            </IfModule>
+            <IfModule !mod_fcgid.c>
+                SetHandler cgi-script
+            </IfModule>',
+        },
+        {
+          path            => '/munin-cgi/munin-cgi-html',
+          provider        => 'location',
+          options         => [ '+ExecCGI' ],
+          custom_fragment => '
+            <IfModule mod_fcgid.c>
+                SetHandler fcgid-script
+            </IfModule>
+            <IfModule !mod_fcgid.c>
+                SetHandler cgi-script
+            </IfModule>',
+        },
+      ],
+      scriptaliases => [
+        { 
+          alias => '/munin-cgi/munin-cgi-graph',
+          path  => $::munin::master::cgi_graph_path,
+        },
+        { 
+          alias => '/munin-cgi/munin-cgi-html',
+          path  => $::munin::master::cgi_html_path,
+        },
+      ],
+      rewrites      => [
+        {
+          comment      => 'Favicon',
+          rewrite_rule => "^/favicon.ico ${::munin::master::htmldir}/static/favicon.ico [L]",
+
+        },
+        {
+          comment      => 'Static files',
+          rewrite_rule => "^/static/(.*) ${::munin::master::htmldir}/static/\$1 [L]",
+        },
+        {
+          comment      => 'HTML',
+          rewrite_rule => '^(/.*\.html)?$ /munin-cgi/munin-cgi-html/$1 [PT]',
+        },
+        {
+          comment      => 'Images1',
+          rewrite_rule => '^/munin-cgi/munin-cgi-graph/(.*) /$1',
+        },
+        {
+          comment      => 'Images2',
+          rewrite_cond => '%{REQUEST_URI} !^/static',
+          rewrite_rule => 'RewriteRule ^/(.*.png)$  /munin-cgi/munin-cgi-graph/$1 [L,PT]',
+        },
+      ],
+      # TODO : better suport of ip tagging
+      tag           => 'munin',
+    }
+
   }
 }
