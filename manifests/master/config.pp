@@ -9,6 +9,7 @@ class munin::master::config () {
   # TODO: add support for other contact modifiers http://munin-monitoring.org/wiki/munin.conf
   $contact          = $munin::master::params::contact
   $graph_data_size  = $munin::master::params::graph_data_size
+  $htmldir          = $munin::master::params::htmldir
 
   file { $munin::master::params::config_file :
     ensure  => $munin::master::ensure,

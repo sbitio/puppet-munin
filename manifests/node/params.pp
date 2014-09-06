@@ -25,6 +25,10 @@ class munin::node::params (
   # TODO
   $plugin_conf_src      = "puppet:///modules/munin/node/plugin-conf-default.${::osfamily}"
   $imported_scripts_dir = "${scripts_dir}/puppet-imported"
+  $log_file             = $::osfamily ? {
+    debian => '/var/log/munin/munin-node.log',
+    redhat => '/var/log/munin-node/munin-node.log',
+  }
 
   case $::osfamily {
     debian, redhat: { }
