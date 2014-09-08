@@ -1,6 +1,7 @@
 class munin::master::apache (
   $ensure  = $munin::master::ensure,
   $enabled = true,
+  $port    = '80',
 ) {
 
   if $caller_module_name != $module_name {
@@ -12,9 +13,10 @@ class munin::master::apache (
       require ::apache::mod::fcgid
     }
 
-    @apache::vhost { $::munin::master::http_name :
+    apache::vhost { $::munin::master::http_name :
       ensure        => $ensure,
       priority      => '40',
+      port          => '80',
       docroot       => $::munin::master::htmldir,
       directories   => [
         { 
