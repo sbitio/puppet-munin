@@ -78,9 +78,7 @@ graph_strategy <%= @graph_strategy %>
 # - cgi html has some bugs, mostly you still have to launch munin-html by hand
 # 
 #html_strategy cron
-<% if @html_strategy -%>
 html_strategy <%= @html_strategy %>
-<% end -%>
 
 # munin-update runs in parallel.
 #

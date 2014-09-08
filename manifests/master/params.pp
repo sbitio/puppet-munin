@@ -6,7 +6,7 @@ class munin::master::params (
   $http_name        = "munin.${fqdn}",
   $graph_strategy   = 'cgi',
   $graph_data_size  = 'normal',
-  $html_strategy    = undef,
+  $html_strategy    = 'cron',
   $rrdcached_socket = undef,
 ) {
 
