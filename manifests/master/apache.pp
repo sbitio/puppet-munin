@@ -16,7 +16,7 @@ class munin::master::apache (
     apache::vhost { $::munin::master::http_name :
       ensure        => $ensure,
       priority      => '40',
-      port          => '80',
+      port          => $port,
       docroot       => $::munin::master::htmldir,
       directories   => [
         { 
