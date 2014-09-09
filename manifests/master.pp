@@ -1,5 +1,3 @@
-import "master/*.pp"
-
 class munin::master (
   $ensure      = present,
   $autoupgrade = true
