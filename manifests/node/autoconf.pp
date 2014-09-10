@@ -4,7 +4,6 @@ class munin::node::autoconf () {
 
   if $munin::node::params::autoconf {
     # TODO: add concat as dependency
-    include concat::setup
 
     $filter_file = '/tmp/puppet_munin_autoconf_filter'
 
