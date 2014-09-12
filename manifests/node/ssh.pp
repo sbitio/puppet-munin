@@ -9,7 +9,7 @@ class munin::node::ssh (
     ensure     => $ensure,
     shell      => '/bin/sh',
   #  managehome => true,
-    require    => Package[$::munin::package],
+    require    => Package[$::munin::node::package],
   }
   #exec { 'create-munin-home' :
   #  command => 'mkdir -p /var/lib/munin && chmod 755 /var/lib/munin && chown munin:munin /var/lib/munin',
