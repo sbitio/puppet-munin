@@ -7,8 +7,12 @@ define munin::master::node (
   $update        = true,
   $contacts      = '',
   $extra_configs = [],
+  $port          = 4949,
+  $ssh           = false,
 ) {
   require munin::master::params
+
+  validate_bool($ssh)
 
   $full_name = $group ? {
     ''      => $name,

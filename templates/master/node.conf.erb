@@ -1,7 +1,11 @@
 # MANAGED BY PUPPET!
 
 [<%= @header %>]
+<% if @ssh -%>
+  address ssh://<%= @address %>/bin/nc localhost <%= @port %> -q 1
+<% else -%>
   address <%= @address %>
+<% end -%>
 <% if @use_node_name -%>
   use_node_name yes
 <% end -%>
