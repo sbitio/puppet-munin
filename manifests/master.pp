@@ -24,6 +24,15 @@ class munin::master (
   include munin::master::install
   include munin::master::config
 
+  if $ssh_gen_key {
+    exec { 'munin-ssh-keygen' :
+      command => 'yes "" | ssh-keygen',
+      user    => munin,
+      creates => '/var/lib/munin/.ssh/id_rsa',
+      require => Package[$package],
+    }
+  }
+
   case $http_server {
     'apache': {
       include munin::master::apache

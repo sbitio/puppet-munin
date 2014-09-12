@@ -8,6 +8,7 @@ class munin::master::params (
   $graph_data_size  = 'normal',
   $html_strategy    = 'cron',
   $rrdcached_socket = undef,
+  $ssh_gen_key      = true,
 ) {
 
   $uses_cgi       = ( $graph_strategy == 'cgi' or $html_strategy == 'cgi' )
