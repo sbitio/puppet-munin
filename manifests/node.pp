@@ -26,8 +26,40 @@ class munin::node (
   include munin::node::config
   include munin::node::service
 
+  if $master_ssh_key != undef {
+    #user { 'munin' :
+    #  shell      => '/bin/sh',
+    #  managehome => true,
+    #  require    => Package['munin-node'],
+    #}
+    #exec { 'create-munin-home' :
+    #  command => 'mkdir -p /var/lib/munin && chmod 755 /var/lib/munin && chown munin:munin /var/lib/munin',
+    #  creates => '/var/lib/munin',
+    #  require => User['munin'],
+    #}
+    ssh_authorized_key { "munin@${node_master}" :
+      user    => 'munin',
+      ensure  => $package_ensure ? {
+        absent  => absent,
+        default => present,
+      },
+      type    => 'ssh-rsa',
+      key     => $master_ssh_key,
+      require => [
+        Class['::munin::node::install'],
+        Class['::munin::node::config'],
+        Class['::munin::node::service'],
+      ],
+    #  require => Exec['create-munin-home'],
+    }
+  }
+
   $master_node_seed = {
     master => $node_master,
+    ssh    => $master_ssh_key ? {
+      undef   => false,
+      default => true,
+    },
   }
   # TODO: add stdlib as dependency
   $master_node = {
