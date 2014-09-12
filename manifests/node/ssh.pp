@@ -1,6 +1,6 @@
 class munin::node::ssh (
-  $ensure              = $::munin::ensure,
-  $node_master         = $::munin::node_master,
+  $ensure              = $::munin::node::ensure,
+  $node_master         = $::munin::node::node_master,
   $master_ssh_key      = undef,
   $master_ssh_key_type = 'ssh-rsa',
 ) {
