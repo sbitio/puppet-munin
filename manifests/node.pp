@@ -34,9 +34,13 @@ class munin::node (
     default : {}
   }
   $master_node_seed = {
-    master  => $node_master,
-    address => $::fqdn,
-    ssh     => $transport ? {
+    master        => $node_master,
+    address       => $::fqdn,
+    use_node_name => $name_in_master ? {
+      $::fqdn => false,
+      default => true,
+    },
+    ssh           => $transport ? {
       'ssh'   => true,
       default => false,
     },
