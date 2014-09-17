@@ -23,6 +23,7 @@ class munin::node::params (
     redhat => 'munin-node',
   }
   $service_name         = 'munin-node'
+  $pidfile              = '/var/run/munin/munin-node.pid'
   $config_file          = '/etc/munin/munin-node.conf'
   $plugin_dir           = '/etc/munin/plugins'
   $plugin_conf_dir      = '/etc/munin/plugin-conf.d'
