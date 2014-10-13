@@ -14,11 +14,12 @@ class munin::master::apache (
     }
 
     apache::vhost { $::munin::master::http_name :
-      ensure        => $ensure,
-      priority      => '40',
-      port          => $port,
-      docroot       => $::munin::master::htmldir,
-      directories   => [
+      ensure         => $ensure,
+      priority       => '40',
+      port           => $port,
+      docroot        => $::munin::master::htmldir,
+      manage_docroot => false,
+      directories    => [
         { 
           path            => $::munin::master::htmldir,
           override        => [ 'All' ],
@@ -54,7 +55,7 @@ class munin::master::apache (
             </IfModule>',
         },
       ],
-      scriptaliases => [
+      scriptaliases  => [
         { 
           alias => '/munin-cgi/munin-cgi-graph',
           path  => $::munin::master::cgi_graph_path,
@@ -64,7 +65,7 @@ class munin::master::apache (
           path  => $::munin::master::cgi_html_path,
         },
       ],
-      rewrites      => [
+      rewrites       => [
         {
           comment      => 'Favicon',
           rewrite_rule => "^/favicon.ico ${::munin::master::htmldir}/static/favicon.ico [L]",
@@ -88,7 +89,7 @@ class munin::master::apache (
         },
       ],
       # TODO : better suport of ip tagging
-      tag           => 'munin',
+      tag            => 'munin',
     }
 
   }
