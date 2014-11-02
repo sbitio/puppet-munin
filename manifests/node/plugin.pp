@@ -4,21 +4,33 @@ define munin::node::plugin (
   $config            = [],
   $source            = '',
   $content           = '',
+  $target            = '',
   $required_packages = [],
 ) {
 
   require munin::node::params
 
-  if $source != '' or $content != '' {
+  if $source != '' or $content != '' or $target != '' {
+    #TODO# ensure only one of $source,$content,$target is defined
     $plugin_file = "${munin::node::params::imported_scripts_dir}/${name}"
     file { $plugin_file:
-      ensure => $ensure,
+      ensure => $ensure ? {
+        present => $target ? {
+          ''      => $ensure,
+          default => link,
+        },
+        default => $ensure,
+      },
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
       source  => $source ? {
         ''      => undef,
         default => $source,
+      },
+      target  => $target ? {
+        ''      => undef,
+        default => $target,
       },
       content => $content ? {
         ''      => undef,
