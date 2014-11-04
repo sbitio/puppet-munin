@@ -19,7 +19,7 @@ class munin::node::ssh (
     },
     owner => 'munin',
     group => 'munin',
-    mode  => 0775,
+    mode  => 0755,
   } ->
   ssh_authorized_key { "munin@${node_master}" :
     user    => 'munin',
