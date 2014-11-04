@@ -3,19 +3,24 @@ class munin::node::ssh (
   $node_master         = $::munin::node::node_master,
   $master_ssh_key      = undef,
   $master_ssh_key_type = 'ssh-rsa',
+  $munin_home          = '/var/lib/munin',
 ) {
 
   user { 'munin' :
     ensure     => $ensure,
     shell      => '/bin/sh',
-  #  managehome => true,
+    home       => $munin_home,
     require    => Package[$::munin::node::package],
-  }
-  #exec { 'create-munin-home' :
-  #  command => 'mkdir -p /var/lib/munin && chmod 755 /var/lib/munin && chown munin:munin /var/lib/munin',
-  #  creates => '/var/lib/munin',
-  #  require => User['munin'],
-  #}
+  } ->
+  file { $munin_home :
+    ensure => $ensure ? {
+      present => directory,
+      default => absent,
+    },
+    owner => 'munin',
+    group => 'munin',
+    mode  => 0775,
+  } ->
   ssh_authorized_key { "munin@${node_master}" :
     user    => 'munin',
     ensure  => $ensure,
@@ -26,7 +31,7 @@ class munin::node::ssh (
       Class['::munin::node::config'],
       Class['::munin::node::service'],
     ],
-  #  require => Exec['create-munin-home'],
   }
 
 }
+
