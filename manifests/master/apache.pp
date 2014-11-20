@@ -9,6 +9,7 @@ class munin::master::apache (
   }
 
   if $enabled and defined('::apache') {
+    require ::apache
     if $ensure == 'present' {
       require ::apache::mod::fcgid
     }
