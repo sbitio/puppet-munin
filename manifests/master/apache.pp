@@ -9,9 +9,9 @@ class munin::master::apache (
   }
 
   if $enabled and defined('::apache') {
-    require ::apache
+    include ::apache
     if $ensure == 'present' {
-      require ::apache::mod::fcgid
+      include ::apache::mod::fcgid
     }
 
     apache::vhost { $::munin::master::http_name :
