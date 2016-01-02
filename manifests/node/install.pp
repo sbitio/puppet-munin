@@ -1,20 +1,15 @@
 class munin::node::install () {
   require munin::node::params
   
-  if ( $::lsbdistcodename == 'squeeze' ) {
-    apt::force { $munin::node::params::package:
-      release => "squeeze-backports",
-      require => Apt::Source["backports"],
-    }
-  }
-  if ( $::lsbdistcodename == 'wheezy' ) {
-    apt::force { $munin::node::params::package:
-      release => "wheezy-backports",
-      require => Apt::Source["backports"],
-    }
-  }
-
   package { $munin::node::params::package:
-    ensure => $munin::node::package_ensure,
+    ensure          => $munin::node::package_ensure,
+    install_options => $::lsbdistcodename ? {
+      /(squeeze|wheezy)/ => "-t ${::lsbdistcodename}-backports",
+      default            => undef,
+    },
+    require         => $::lsbdistcodename ? {
+      /(squeeze|wheezy)/ => Apt::Source["backports"],
+      default            => undef,
+    }
   }
 }
