@@ -19,6 +19,7 @@ class munin::node::params (
       'munin-node',
       'munin-plugins-core',
       'munin-plugins-extra',
+      'libmodule-pluggable-perl', # Needed by mysql plugin at least.
     ],
     redhat => 'munin-node',
   }
