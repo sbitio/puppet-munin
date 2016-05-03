@@ -36,7 +36,7 @@ group adm
 user root
 
 [df*]
-env.exclude none unknown iso9660 squashfs udf romfs ramfs debugfs tmpfs
+env.exclude none unknown iso9660 squashfs udf romfs ramfs debugfs
 env.warning 92
 env.critical 98
 
