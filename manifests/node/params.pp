@@ -14,14 +14,37 @@ class munin::node::params (
   $name_in_master = $::fqdn,
 ) {
 
-  $package              = $::osfamily ? {
-    debian => [
-      'munin-node',
-      'munin-plugins-core',
-      'munin-plugins-extra',
-    ],
-    redhat => 'munin-node',
+  case $::osfamily {
+    'Debian': {
+      case $::lsbmajdistrelease {
+        '7': {
+          $package = [
+            'munin-node',
+            'munin-plugins-core',
+            'munin-plugins-extra',
+          ]
+        }
+        default: {
+          $package = [
+            'munin-node',
+            'munin-plugins-core',
+            'munin-plugins-extra',
+          ]
+        }
+      }
+      $log_file = '/var/log/munin/munin-node.log'
+    }
+    'RedHat': {
+      $package = [
+        'munin-node',
+      ]
+      $log_file = '/var/log/munin-node/munin-node.log'
+    }
+    default: {
+      fail("Unsupported osfamily: ${::osfamily} operatingsystem: ${::operatingsystem}, module ${module_name} only support osfamily Debian and RedHat")
+    }
   }
+
   $service_name         = 'munin-node'
   $pidfile              = '/var/run/munin/munin-node.pid'
   $config_file          = '/etc/munin/munin-node.conf'
@@ -31,16 +54,4 @@ class munin::node::params (
   # TODO
   $plugin_conf_src      = "puppet:///modules/munin/node/plugin-conf-default.${::osfamily}"
   $imported_scripts_dir = "${scripts_dir}/puppet-imported"
-  $log_file             = $::osfamily ? {
-    debian => '/var/log/munin/munin-node.log',
-    redhat => '/var/log/munin-node/munin-node.log',
-  }
-
-  case $::osfamily {
-    debian, redhat: { }
-    default: {
-      fail("Unsupported platform: ${::osfamily}")
-    }
-  }
-
 }
