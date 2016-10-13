@@ -14,7 +14,7 @@ class munin::master::apache (
       include ::apache::mod::fcgid
     }
 
-    apache::vhost { $::munin::master::http_name :
+    apache::vhost { $::munin::master::params::http_name :
       ensure         => $ensure,
       priority       => '40',
       port           => $port,
