@@ -66,16 +66,10 @@ define munin::node::plugin (
         "${name}" => $config,
       }
     }
-    $plugin_conf = {
-      "${name}" => {
-        config => $conf,
-      },
+    munin::node::plugin::conf { $name:
+      config => $conf,
     }
   }
-  else {
-    $plugin_conf = {}
-  }
-  create_resources(munin::node::plugin::conf, $plugin_conf, {})
 
   Munin::Node::Plugin::Required_package <| tag == $name |> {
     before => File[$file_links],

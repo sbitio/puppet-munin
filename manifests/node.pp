@@ -45,11 +45,8 @@ class munin::node (
       default => false,
     },
   }
-  # TODO: add stdlib as dependency
-  $master_node = {
-    "${name_in_master}" => merge($master_node_seed, $node_defaults),
-  }
-  #notify { "---${master_node}---": }
-  create_resources('@@munin::master::node', $master_node)
 
+  @@munin::master::node { $name_in_master:
+    * => merge($master_node_seed, $node_defaults),
+  }
 }

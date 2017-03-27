@@ -40,8 +40,20 @@ class munin::master::config () {
     master => $::fqdn,
   }
 
-  create_resources(munin::master::node, hiera_hash('munin::master::nodes',{}), $defaults)
-  create_resources(munin::master::group, hiera_hash('munin::master::groups',{}), $defaults)
+  $nodes = hiera_hash('munin::master::nodes', {})
+  $nodes.each |String $name, Hash $params| {
+    $params_real = merge($params, $defaults)
+    munin::master::node { $name:
+      * => $params_real,
+    }
+  }
+  $groups = hiera_hash('munin::master::groups', {})
+  $groups.each |String $name, Hash $params| {
+    $params_real = merge($params, $defaults)
+    munin::master::group { $name:
+      * => $params_real,
+    }
+  }
 
   Munin::Master::Node <| master == $::fqdn |>
   Munin::Master::Node <<| master == $::fqdn |>>
