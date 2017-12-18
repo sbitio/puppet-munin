@@ -4,7 +4,7 @@ class munin::node::install () {
   package { $munin::node::params::package:
     ensure          => $munin::node::package_ensure,
     install_options => $::lsbdistcodename ? {
-      /(squeeze|wheezy)/ => ['-t' "${::lsbdistcodename}-backports"],
+      /(squeeze|wheezy)/ => ['-t', "${::lsbdistcodename}-backports"],
       default            => undef,
     },
     require         => $::lsbdistcodename ? {
