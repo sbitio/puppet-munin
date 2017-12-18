@@ -57,7 +57,7 @@ define munin::node::plugin (
   }
 
   if $config != [] {
-    if $sufixex != [] {
+    if $sufixes != [] {
       $conf = {
         "${name}*" => $config,
       }
