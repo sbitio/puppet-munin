@@ -1,6 +1,7 @@
 class munin::node (
   $ensure      = present,
-  $autoupgrade = true
+  $autoupgrade = true,
+  Optional[String] $master_group = undef
 ) inherits munin::node::params {
   case $ensure {
     /(present)/: {
@@ -35,6 +36,7 @@ class munin::node (
   }
   $master_node_seed = {
     master        => $node_master,
+    group         => $master_group,
     address       => $::fqdn,
     use_node_name => $name_in_master ? {
       $::fqdn => false,
