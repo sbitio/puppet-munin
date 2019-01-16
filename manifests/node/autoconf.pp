@@ -1,8 +1,11 @@
-class munin::node::autoconf () {
+class munin::node::autoconf (
+  $exclusions = [],
+) {
 
   require munin::node::params
 
   if $munin::node::params::autoconf {
+    @munin::node::autoconf::exclusion {$exclusions: }
     # TODO: add concat as dependency
 
     $filter_file = '/tmp/puppet_munin_autoconf_filter'
