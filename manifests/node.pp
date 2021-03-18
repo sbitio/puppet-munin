@@ -46,6 +46,7 @@ class munin::node (
       'ssh'   => true,
       default => false,
     },
+    jump_host => $jump_host,
   }
 
   @@munin::master::node { $name_in_master:
