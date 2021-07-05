@@ -4,7 +4,6 @@ define munin::node::plugin::required_package (
 
   case $ensure {
     present : {
-      # TODO: add stdlib as dependency
       ensure_packages(any2array($name))
     }
     absent  : {

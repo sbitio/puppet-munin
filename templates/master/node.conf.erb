@@ -2,7 +2,7 @@
 
 [<%= @header %>]
 <% if @ssh -%>
-  address ssh://<%= @address %>/bin/nc localhost <%= @port %> -q 1
+  address ssh://<%= @jump_host != nil ? @jump_host : @address %>/bin/nc <%= @jump_host != nil ? @address : 'localhost' %> <%= @port %> -q 1
 <% else -%>
   address <%= @address %>
 <% end -%>

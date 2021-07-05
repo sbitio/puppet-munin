@@ -11,6 +11,7 @@ class munin::node::params (
   $node_master    = $::fqdn,
   $node_defaults  = {},
   $transport      = undef,
+  $jump_host      = undef,
   $name_in_master = $::fqdn,
 ) {
 
@@ -29,6 +30,7 @@ class munin::node::params (
             'munin-node',
             'munin-plugins-core',
             'munin-plugins-extra',
+            'netcat',
           ]
         }
       }
