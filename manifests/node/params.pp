@@ -13,6 +13,7 @@ class munin::node::params (
   $transport      = undef,
   $jump_host      = undef,
   $name_in_master = $::fqdn,
+  $pid_file_path = '/run/munin/munin-node.pid'
 ) {
 
   case $::osfamily {

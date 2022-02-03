@@ -12,6 +12,7 @@ class munin::node::config () {
   $cidr_deny  = $munin::node::params::cidr_deny
 
   $log_file   = $munin::node::params::log_file
+  $pid_file_path   = $munin::node::params::pid_file_path
 
   file { $munin::node::params::config_file :
     ensure  => $munin::node::ensure,
