@@ -9,6 +9,7 @@ define munin::master::node (
   $extra_configs = [],
   $port          = 4949,
   $ssh           = false,
+  $jump_host     = undef,
 ) {
   require munin::master::params
 

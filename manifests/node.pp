@@ -1,6 +1,7 @@
 class munin::node (
   $ensure      = present,
-  $autoupgrade = true
+  $autoupgrade = true,
+  Optional[String] $master_group = undef
 ) inherits munin::node::params {
   case $ensure {
     /(present)/: {
@@ -35,6 +36,7 @@ class munin::node (
   }
   $master_node_seed = {
     master        => $node_master,
+    group         => $master_group,
     address       => $::fqdn,
     use_node_name => $name_in_master ? {
       $::fqdn => false,
@@ -44,12 +46,10 @@ class munin::node (
       'ssh'   => true,
       default => false,
     },
+    jump_host => $jump_host,
   }
-  # TODO: add stdlib as dependency
-  $master_node = {
-    "${name_in_master}" => merge($master_node_seed, $node_defaults),
-  }
-  #notify { "---${master_node}---": }
-  create_resources('@@munin::master::node', $master_node)
 
+  @@munin::master::node { $name_in_master:
+    * => merge($master_node_seed, $node_defaults),
+  }
 }

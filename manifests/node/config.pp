@@ -68,10 +68,12 @@ class munin::node::config () {
 #    tag => $::fqdn,
 #  }
 
-  $defaults = {
+  $plugins = hiera_hash('munin::node::plugins', {})
+  $plugins.each |String $name, Hash $params| {
+    munin::node::plugin { $name:
+      * => $params,
+    }
   }
-
-  create_resources(munin::node::plugin, hiera_hash('munin::node::plugins',{}), $defaults)
 
   Munin::Node::Plugin <| |>
   Munin::Node::Plugin <<| tag == $::fqdn |>>
