@@ -23,10 +23,10 @@ class munin::node (
     }
   }
 
-  class{'munin::node::install': } ->
-  class{'munin::node::config': } ~>
-  class{'munin::node::service': } ->
-  Class['munin::node']
+  class{'munin::node::install': }
+  -> class{'munin::node::config': }
+  ~> class{'munin::node::service': }
+  -> Class['munin::node']
 
   case $munin::node::params::transport {
     'ssh' : {
