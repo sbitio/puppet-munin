@@ -44,14 +44,14 @@ define munin::node::plugin (
     #TODO# ensure only one of $source,$content,$target is defined
     $plugin_file = "${munin::node::params::imported_scripts_dir}/${name}"
     file { $plugin_file:
-      ensure => $_real_plugin_file_ensure,
+      ensure  => $_real_plugin_file_ensure,
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
       source  => $_real_source,
       target  => $_real_target,
       content => $_real_content,
-      notify => Service[$munin::node::params::service_name],
+      notify  => Service[$munin::node::params::service_name],
     }
   }
   else {
@@ -91,8 +91,8 @@ define munin::node::plugin (
   }
 
   file { $file_links :
-    ensure  => $_real_file_links_ensure,
-    target  => $plugin_file,
-    notify  => Service[$munin::node::params::service_name],
+    ensure => $_real_file_links_ensure,
+    target => $plugin_file,
+    notify => Service[$munin::node::params::service_name],
   }
 }
