@@ -24,10 +24,10 @@ class munin::node::config () {
   }
 
   file { $munin::node::params::plugin_dir:
-    ensure  => $munin::node::dir_ensure,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
+    ensure => $munin::node::dir_ensure,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
   }
 
   file { $munin::node::params::plugin_conf_dir:
@@ -41,19 +41,19 @@ class munin::node::config () {
   }
 
   file { "${munin::node::params::plugin_conf_dir}/00_defaults":
-    ensure  => $munin::node::ensure,
-    owner   => 'root',
-    group   => 'munin',
-    mode    => '0640',
-    source  => $munin::node::params::plugin_conf_src,
-    notify  => Service[$munin::node::params::service_name],
+    ensure => $munin::node::ensure,
+    owner  => 'root',
+    group  => 'munin',
+    mode   => '0640',
+    source => $munin::node::params::plugin_conf_src,
+    notify => Service[$munin::node::params::service_name],
   }
 
   file { $munin::node::params::scripts_dir:
-    ensure  => $munin::node::dir_ensure,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
+    ensure => $munin::node::dir_ensure,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
   }
 
   file { $munin::node::params::imported_scripts_dir:
