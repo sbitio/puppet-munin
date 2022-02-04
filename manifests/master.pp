@@ -1,3 +1,7 @@
+# munin::master
+#
+# This class is responsible for installing and configuring the munin-master
+#
 class munin::master (
   $ensure      = present,
   $autoupgrade = true

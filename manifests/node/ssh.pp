@@ -1,3 +1,7 @@
+# munin::node::ssh
+#
+# This class is responsible for configuring the munin ssh-user 
+#
 class munin::node::ssh (
   $ensure              = $::munin::node::ensure,
   $node_master         = $::munin::node::node_master,

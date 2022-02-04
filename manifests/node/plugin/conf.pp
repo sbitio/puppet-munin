@@ -1,3 +1,7 @@
+# munin::node::plugin::conf
+#
+# This defined type handles the plugin config files
+#
 define munin::node::plugin::conf (
   $ensure            = present,
   $config            = {},

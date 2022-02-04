@@ -1,3 +1,7 @@
+# munin::master::config
+#
+# This class handles the configuration files for the master side of munin
+#
 class munin::master::config () {
   require munin::master::params
   require munin::master::install

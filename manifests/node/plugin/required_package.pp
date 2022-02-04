@@ -1,3 +1,7 @@
+# munin::node::plugin::required_package
+#
+# This defined type handles the installation of plugin required packages
+#
 define munin::node::plugin::required_package (
   $ensure = present,
 ) {

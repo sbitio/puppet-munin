@@ -1,3 +1,7 @@
+# munin::node::plugin
+#
+# This defined type is responsible for managing the munin-node plugins
+#
 define munin::node::plugin (
   $ensure            = present,
   $sufixes           = [],

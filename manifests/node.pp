@@ -1,3 +1,7 @@
+# munin::node
+#
+# This class is responsible for installing and configuring the munin-node
+#
 class munin::node (
   $ensure      = present,
   $autoupgrade = true,

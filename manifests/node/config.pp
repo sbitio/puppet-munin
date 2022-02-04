@@ -1,3 +1,7 @@
+# munin::node::config
+#
+# This class handles the configuration files for the node side of munin
+#
 class munin::node::config () {
   require munin::node::params
   require munin::node::install

@@ -1,3 +1,8 @@
+# munin::master::group
+#
+# This defined type manages creates an apache vhost for munin master
+# and configurates it with the required params
+#
 class munin::master::apache (
   $ensure  = $munin::master::ensure,
   $enabled = true,

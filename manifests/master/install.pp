@@ -1,3 +1,7 @@
+# munin::master::install
+#
+# This class handles the installation of the munin-master package
+#
 class munin::master::install () {
   require munin::master::params
 

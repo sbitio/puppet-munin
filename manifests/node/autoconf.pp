@@ -1,3 +1,7 @@
+# munin::node::autoconf
+#
+# This is a helper class for munin::node::config
+#
 class munin::node::autoconf (
   $exclusions = [],
 ) {

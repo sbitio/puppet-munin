@@ -1,3 +1,7 @@
+# munin::master::group
+#
+# This defined type manages munin group config files
+#
 define munin::master::group (
   $master,
   $ensure        = $munin::master::ensure,

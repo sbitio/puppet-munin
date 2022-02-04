@@ -1,3 +1,7 @@
+# munin::node::install
+#
+# This class handles the installation of the munin-node package
+#
 class munin::node::install () {
   require munin::node::params
 

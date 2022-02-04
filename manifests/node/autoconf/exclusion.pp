@@ -1,3 +1,7 @@
+# munin::node::autoconf::exclusion
+#
+# This defined type is a helper for munin::node::autoconf and handles exclusions
+#
 define munin::node::autoconf::exclusion () {
 
   require munin::node::params

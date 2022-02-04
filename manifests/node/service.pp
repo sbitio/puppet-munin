@@ -1,3 +1,7 @@
+# munin::node::service
+#
+# This class is responsible for configuring the systemd munin-node service
+#
 class munin::node::service () {
   require munin::node::params
   require munin::node::install
