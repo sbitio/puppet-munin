@@ -24,8 +24,8 @@ class munin::node::ssh (
     mode  => '0755',
   } ->
   ssh_authorized_key { "munin@${node_master}" :
-    user    => 'munin',
     ensure  => $ensure,
+    user    => 'munin',
     type    => $master_ssh_key_type,
     key     => $master_ssh_key,
     require => [
