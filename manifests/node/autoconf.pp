@@ -26,11 +26,11 @@ class munin::node::autoconf (
 
     exec { 'munin-node-configure' :
       #refreshonly => true,
-      command     => "munin-node-configure --shell ${filter} | sh",
-      unless      => "[ $(munin-node-configure --shell ${filter} 2> /dev/null | wc -l) = 0 ]",
-      path        => ['/usr/bin', '/usr/sbin', '/bin'],
-      notify      => Service[$munin::node::params::service_name],
-      require     => Concat['munin_node_autoconf_excl'],
+      command => "munin-node-configure --shell ${filter} | sh",
+      unless  => "[ $(munin-node-configure --shell ${filter} 2> /dev/null | wc -l) = 0 ]",
+      path    => ['/usr/bin', '/usr/sbin', '/bin'],
+      notify  => Service[$munin::node::params::service_name],
+      require => Concat['munin_node_autoconf_excl'],
     }
   }
 
