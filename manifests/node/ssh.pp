@@ -16,14 +16,14 @@ class munin::node::ssh (
     shell   => '/bin/sh',
     home    => $munin_home,
     require => Package[$::munin::node::package],
-  } ->
-  file { $munin_home :
+  }
+  -> file { $munin_home :
     ensure => $_real_ensure,
     owner  => 'munin',
     group  => 'munin',
     mode   => '0755',
-  } ->
-  ssh_authorized_key { "munin@${node_master}" :
+  }
+  -> ssh_authorized_key { "munin@${node_master}" :
     ensure  => $ensure,
     user    => 'munin',
     type    => $master_ssh_key_type,
