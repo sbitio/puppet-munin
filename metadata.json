@@ -1,6 +1,6 @@
 {
   "name": "sbitio-munin",
-  "version": "1.x.x",
+  "version": "1.0.0",
   "author": "SB IT Media, S.L.",
   "summary": "Performs installation and configuration of Munin service",
   "license": "MIT",
