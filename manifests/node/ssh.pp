@@ -6,6 +6,11 @@ class munin::node::ssh (
   $munin_home          = '/var/lib/munin',
 ) {
 
+  $_real_ensure = $ensure ? {
+    present => directory,
+    default => absent,
+  }
+
   user { 'munin' :
     ensure     => $ensure,
     shell      => '/bin/sh',
@@ -13,10 +18,7 @@ class munin::node::ssh (
     require    => Package[$::munin::node::package],
   } ->
   file { $munin_home :
-    ensure => $ensure ? {
-      present => directory,
-      default => absent,
-    },
+    ensure => $_real_ensure,
     owner => 'munin',
     group => 'munin',
     mode  => '0755',
@@ -34,4 +36,3 @@ class munin::node::ssh (
   }
 
 }
-
