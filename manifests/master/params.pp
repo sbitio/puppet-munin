@@ -3,7 +3,7 @@ class munin::master::params (
     'root' => 'mail -s "Munin notification for ${var:group}::${var:host}" root',
   },
   $http_server      = 'apache',
-  $http_name        = "munin.${fqdn}",
+  $http_name        = "munin.${::fqdn}",
   $graph_strategy   = 'cgi',
   $graph_data_size  = 'normal',
   $html_strategy    = 'cron',
