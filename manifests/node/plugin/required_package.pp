@@ -3,15 +3,18 @@ define munin::node::plugin::required_package (
 ) {
 
   case $ensure {
-    present : {
+    present: {
       ensure_packages(any2array($name))
     }
-    absent  : {
+    absent: {
       if ! defined(Package[$name]) {
         package { $name :
           ensure => $ensure,
         }
       }
+    }
+    default: {
+      fail('ensure parameter must be present or absent')
     }
   }
 }
