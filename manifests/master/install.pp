@@ -7,7 +7,7 @@ class munin::master::install () {
   }
 
   $_real_require = $::lsbdistcodename ? {
-    /(squeeze|wheezy)/ => Apt::Source["backports"],
+    /(squeeze|wheezy)/ => Apt::Source['backports'],
     default            => undef,
   }
 
