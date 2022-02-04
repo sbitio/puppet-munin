@@ -21,7 +21,7 @@ class munin::master::apache (
       docroot        => $::munin::master::htmldir,
       manage_docroot => false,
       directories    => [
-        { 
+        {
           path            => $::munin::master::htmldir,
           override        => [ 'All' ],
           options         => [ 'None' ],
@@ -57,11 +57,11 @@ class munin::master::apache (
         },
       ],
       scriptaliases  => [
-        { 
+        {
           alias => '/munin-cgi/munin-cgi-graph',
           path  => $::munin::master::cgi_graph_path,
         },
-        { 
+        {
           alias => '/munin-cgi/munin-cgi-html',
           path  => $::munin::master::cgi_html_path,
         },
