@@ -10,32 +10,47 @@ define munin::node::plugin (
 
   require munin::node::params
 
+  $_real_plugin_file_target = $target ? {
+    ''      => $ensure,
+    default => link,
+  }
+
+  $_real_plugin_file_ensure = $ensure ? {
+    present => $_real_plugin_file_target,
+    default => $ensure,
+  }
+
+  $_real_source = $source ? {
+    ''      => undef,
+    default => $source,
+  }
+
+  $_real_target = $target ? {
+    ''      => undef,
+    default => $target,
+  }
+
+  $_real_content = $content ? {
+    ''      => undef,
+    default => $content,
+  }
+
+  $_real_file_links_ensure = $ensure ? {
+    present => link,
+    default => $ensure,
+  }
+
   if $source != '' or $content != '' or $target != '' {
     #TODO# ensure only one of $source,$content,$target is defined
     $plugin_file = "${munin::node::params::imported_scripts_dir}/${name}"
     file { $plugin_file:
-      ensure => $ensure ? {
-        present => $target ? {
-          ''      => $ensure,
-          default => link,
-        },
-        default => $ensure,
-      },
+      ensure => $_real_plugin_file_ensure,
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
-      source  => $source ? {
-        ''      => undef,
-        default => $source,
-      },
-      target  => $target ? {
-        ''      => undef,
-        default => $target,
-      },
-      content => $content ? {
-        ''      => undef,
-        default => $content,
-      },
+      source  => $_real_source,
+      target  => $_real_target,
+      content => $_real_content,
       notify => Service[$munin::node::params::service_name],
     }
   }
@@ -76,10 +91,7 @@ define munin::node::plugin (
   }
 
   file { $file_links :
-    ensure  => $ensure ? {
-      present => link,
-      default => $ensure,
-    },
+    ensure  => $_real_file_links_ensure,
     target  => $plugin_file,
     notify  => Service[$munin::node::params::service_name],
   }
