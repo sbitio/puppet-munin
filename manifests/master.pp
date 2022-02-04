@@ -24,16 +24,16 @@ class munin::master (
   include munin::master::install
   include munin::master::config
 
-  if $ssh_gen_key {
+  if $munin::master::params::ssh_gen_key {
     exec { 'munin-ssh-keygen' :
       command => 'yes "" | ssh-keygen',
       user    => munin,
       creates => '/var/lib/munin/.ssh/id_rsa',
-      require => Package[$package],
+      require => Package[$munin::master::params::package],
     }
   }
 
-  case $http_server {
+  case $munin::master::params::http_server {
     'apache': {
       include munin::master::apache
     }
@@ -43,7 +43,7 @@ class munin::master (
     '': {
     }
     default: {
-      fail("unsupported http_server = ${http_server} param")
+      fail("unsupported http_server = ${munin::master::params::http_server} param")
     }
   }
 
