@@ -1,3 +1,7 @@
+# munin::node
+#
+# This class is responsible for installing and configuring the munin-node
+#
 class munin::node (
   $ensure      = present,
   $autoupgrade = true,
@@ -23,33 +27,33 @@ class munin::node (
     }
   }
 
-  class{'munin::node::install': } ->
-  class{'munin::node::config': } ~>
-  class{'munin::node::service': } ->
-  Class['munin::node']
+  class{'munin::node::install': }
+  -> class{'munin::node::config': }
+  ~> class{'munin::node::service': }
+  -> Class['munin::node']
 
-  case $transport {
+  case $munin::node::params::transport {
     'ssh' : {
       include munin::node::ssh
     }
     default : {}
   }
   $master_node_seed = {
-    master        => $node_master,
+    master        => $munin::node::params::node_master,
     group         => $master_group,
     address       => $::fqdn,
-    use_node_name => $name_in_master ? {
+    use_node_name => $munin::node::params::name_in_master ? {
       $::fqdn => false,
       default => true,
     },
-    ssh           => $transport ? {
+    ssh           => $munin::node::params::transport ? {
       'ssh'   => true,
       default => false,
     },
-    jump_host => $jump_host,
+    jump_host => $munin::node::params::jump_host,
   }
 
-  @@munin::master::node { $name_in_master:
-    * => merge($master_node_seed, $node_defaults),
+  @@munin::master::node { $munin::node::params::name_in_master:
+    * => merge($master_node_seed, $munin::node::params::node_defaults),
   }
 }

@@ -1,3 +1,7 @@
+# munin::master::node
+#
+# This defined type manages the master nod config file
+#
 define munin::master::node (
   $master,
   $address       = $title,

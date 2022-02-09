@@ -1,3 +1,7 @@
+# munin::node::params
+#
+# This class handles the data for the node side of the module
+#
 class munin::node::params (
   $autoconf       = true,
   $host           = '*',

@@ -1,3 +1,8 @@
+# munin::master::group
+#
+# This defined type manages creates an apache vhost for munin master
+# and configurates it with the required params
+#
 class munin::master::apache (
   $ensure  = $munin::master::ensure,
   $enabled = true,
@@ -21,7 +26,7 @@ class munin::master::apache (
       docroot        => $::munin::master::htmldir,
       manage_docroot => false,
       directories    => [
-        { 
+        {
           path            => $::munin::master::htmldir,
           override        => [ 'All' ],
           options         => [ 'None' ],
@@ -57,11 +62,11 @@ class munin::master::apache (
         },
       ],
       scriptaliases  => [
-        { 
+        {
           alias => '/munin-cgi/munin-cgi-graph',
           path  => $::munin::master::cgi_graph_path,
         },
-        { 
+        {
           alias => '/munin-cgi/munin-cgi-html',
           path  => $::munin::master::cgi_html_path,
         },

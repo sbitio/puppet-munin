@@ -1,3 +1,7 @@
+# munin::node::plugin::conf
+#
+# This defined type handles the plugin config files
+#
 define munin::node::plugin::conf (
   $ensure            = present,
   $config            = {},
@@ -9,19 +13,23 @@ define munin::node::plugin::conf (
 
   $conf_file = "${munin::node::params::plugin_conf_dir}/${name}"
 
+  $_real_source = $source ? {
+    ''      => undef,
+    default => $source,
+  }
+
+  $_real_content = $content ? {
+    ''      => template('munin/node/plugin_conf.erb'),
+    default => $content,
+  }
+
   file { $conf_file:
     ensure  => $ensure,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    source  => $source ? {
-      ''      => undef,
-      default => $source,
-    },
-    content => $content ? {
-      ''      => template('munin/node/plugin_conf.erb'),
-      default => $content,
-    },
+    source  => $_real_source,
+    content => $_real_content,
     notify  => Service[$munin::node::params::service_name],
   }
 

@@ -1,3 +1,7 @@
+# munin::master::apache_niteman
+#
+# Another variation of the munin::master::apache class
+#
 class munin::master::apache_niteman (
   $ensure = $munin::master::ensure,
 ) {
