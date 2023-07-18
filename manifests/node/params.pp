@@ -35,7 +35,7 @@ class munin::node::params (
             'munin-node',
             'munin-plugins-core',
             'munin-plugins-extra',
-            'netcat',
+            'netcat-openbsd',
           ]
         }
       }
