@@ -12,12 +12,10 @@ define munin::master::node (
   $contacts      = '',
   $extra_configs = [],
   $port          = 4949,
-  $ssh           = false,
+  Boolean $ssh   = false,
   $jump_host     = undef,
 ) {
   require munin::master::params
-
-  validate_bool($ssh)
 
   $full_name = $group ? {
     ''      => $name,
