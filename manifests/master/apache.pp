@@ -61,13 +61,13 @@ class munin::master::apache (
             </IfModule>',
         },
       ],
-      scriptaliases  => [
+      aliases  => [
         {
-          alias => '/munin-cgi/munin-cgi-graph',
+          scriptalias => '/munin-cgi/munin-cgi-graph',
           path  => $::munin::master::cgi_graph_path,
         },
         {
-          alias => '/munin-cgi/munin-cgi-html',
+          scriptalias => '/munin-cgi/munin-cgi-html',
           path  => $::munin::master::cgi_html_path,
         },
       ],
