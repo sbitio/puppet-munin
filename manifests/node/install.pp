@@ -5,12 +5,12 @@
 class munin::node::install () {
   require munin::node::params
 
-  $_real_install_options = $::lsbdistcodename ? {
-    /(squeeze|wheezy)/ => ['-t', "${::lsbdistcodename}-backports"],
+  $_real_install_options = $facts['os']['distro']['codename'] ? {
+    /(squeeze|wheezy)/ => ['-t', "${facts['os']['distro']['codename']}-backports"],
     default            => undef,
   }
 
-  $_real_require = $::lsbdistcodename ? {
+  $_real_require = $facts['os']['distro']['codename'] ? {
     /(squeeze|wheezy)/ => Apt::Source['backports'],
     default            => undef,
   }

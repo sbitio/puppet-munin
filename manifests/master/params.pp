@@ -7,7 +7,7 @@ class munin::master::params (
     'root' => 'mail -s "Munin notification for ${var:group}::${var:host}" root',
   },
   $http_server      = 'apache',
-  $http_name        = "munin.${::fqdn}",
+  $http_name        = "munin.${facts['networking']['fqdn']}",
   $graph_strategy   = 'cgi',
   $graph_data_size  = 'normal',
   $html_strategy    = 'cron',
@@ -16,7 +16,7 @@ class munin::master::params (
 ) {
 
   $uses_cgi       = ( $graph_strategy == 'cgi' or $html_strategy == 'cgi' )
-  $package        = $::osfamily ? {
+  $package        = $facts['os']['family'] ? {
     debian => 'munin',
     redhat => $uses_cgi ? {
       true    => $http_server ? {
@@ -28,27 +28,27 @@ class munin::master::params (
     },
   }
   $config_file    = '/etc/munin/munin.conf'
-  $config_dir     = $::osfamily ? {
+  $config_dir     = $facts['os']['family'] ? {
     debian => '/etc/munin/munin-conf.d',
     redhat => '/etc/munin/conf.d',
   }
-  $htmldir        = $::osfamily ? {
+  $htmldir        = $facts['os']['family'] ? {
     debian => '/var/cache/munin/www',
     redhat => '/var/www/html/munin',
   }
-  $cgi_graph_path = $::osfamily ? {
+  $cgi_graph_path = $facts['os']['family'] ? {
     debian => '/usr/lib/munin/cgi/munin-cgi-graph',
     redhat => '/var/www/cgi-bin/munin-cgi-graph',
   }
-  $cgi_html_path  = $::osfamily ? {
+  $cgi_html_path  = $facts['os']['family'] ? {
     debian => '/usr/lib/munin/cgi/munin-cgi-html',
     redhat => '/var/www/cgi-bin/munin-cgi-html',
   }
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     debian, redhat: { }
     default: {
-      fail("Unsupported platform: ${::osfamily}")
+      fail("Unsupported platform: ${facts['os']['family']}")
     }
   }
 

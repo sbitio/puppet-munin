@@ -70,7 +70,7 @@ class munin::node::config () {
   }
 
 #  @@munin::node::plugin { 'munin-node':
-#    tag => $::fqdn,
+#    tag => $facts['networking']['fqdn'],
 #  }
 
   $plugins = hiera_hash('munin::node::plugins', {})
@@ -81,9 +81,9 @@ class munin::node::config () {
   }
 
   Munin::Node::Plugin <| |>
-  Munin::Node::Plugin <<| tag == $::fqdn |>>
+  Munin::Node::Plugin <<| tag == $facts['networking']['fqdn'] |>>
 
   Munin::Node::Plugin::Conf <| |>
-  Munin::Node::Plugin::Conf <<| tag == $::fqdn |>>
+  Munin::Node::Plugin::Conf <<| tag == $facts['networking']['fqdn'] |>>
 
 }

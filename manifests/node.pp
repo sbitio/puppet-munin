@@ -41,9 +41,9 @@ class munin::node (
   $master_node_seed = {
     master        => $munin::node::params::node_master,
     group         => $master_group,
-    address       => $::fqdn,
+    address       => $facts['networking']['fqdn'],
     use_node_name => $munin::node::params::name_in_master ? {
-      $::fqdn => false,
+      $facts['networking']['fqdn'] => false,
       default => true,
     },
     ssh           => $munin::node::params::transport ? {

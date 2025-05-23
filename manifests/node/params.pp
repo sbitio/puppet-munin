@@ -12,17 +12,17 @@ class munin::node::params (
   ],
   $cidr_allow     = [],
   $cidr_deny      = [],
-  $node_master    = $::fqdn,
+  $node_master    = $facts['networking']['fqdn'],
   $node_defaults  = {},
   $transport      = undef,
   $jump_host      = undef,
-  $name_in_master = $::fqdn,
+  $name_in_master = $facts['networking']['fqdn'],
   $pid_file_path = '/run/munin/munin-node.pid'
 ) {
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'Debian': {
-      case $::lsbmajdistrelease {
+      case $facts['os']['distro']['release']['major'] {
         '7': {
           $package = [
             'munin-node',
@@ -48,7 +48,7 @@ class munin::node::params (
       $log_file = '/var/log/munin-node/munin-node.log'
     }
     default: {
-      fail("Unsupported osfamily: ${::osfamily} operatingsystem: ${::operatingsystem}, module ${module_name} only support osfamily Debian and RedHat")
+      fail("Unsupported osfamily: ${facts['os']['family']} operatingsystem: ${facts['os']['name']}, module ${module_name} only support osfamily Debian and RedHat")
     }
   }
 
@@ -59,6 +59,6 @@ class munin::node::params (
   $plugin_conf_dir      = '/etc/munin/plugin-conf.d'
   $scripts_dir          = '/usr/share/munin/plugins'
   # TODO
-  $plugin_conf_src      = "puppet:///modules/munin/node/plugin-conf-default.${::osfamily}"
+  $plugin_conf_src      = "puppet:///modules/munin/node/plugin-conf-default.${facts['os']['family']}"
   $imported_scripts_dir = "${scripts_dir}/puppet-imported"
 }

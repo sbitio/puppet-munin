@@ -32,16 +32,16 @@ class munin::master::config () {
     purge   => true,
   }
 
-#  @@munin::master::node { $::fqdn:
-#    master  => $::fqdn,
+#  @@munin::master::node { $facts['networking']['fqdn']:
+#    master  => $facts['networking']['fqdn'],
 #    address => '127.0.0.1',
 #  }
 #  @@munin::master::group { 'pruebas':
-#    master  => $::fqdn,
+#    master  => $facts['networking']['fqdn'],
 #  }
 
   $defaults = {
-    master => $::fqdn,
+    master => $facts['networking']['fqdn'],
   }
 
   $nodes = hiera_hash('munin::master::nodes', {})
@@ -59,9 +59,9 @@ class munin::master::config () {
     }
   }
 
-  Munin::Master::Node <| master == $::fqdn |>
-  Munin::Master::Node <<| master == $::fqdn |>>
+  Munin::Master::Node <| master == $facts['networking']['fqdn'] |>
+  Munin::Master::Node <<| master == $facts['networking']['fqdn'] |>>
 
-  Munin::Master::Group <| master == $::fqdn |>
-  Munin::Master::Group <<| master == $::fqdn |>>
+  Munin::Master::Group <| master == $facts['networking']['fqdn'] |>
+  Munin::Master::Group <<| master == $facts['networking']['fqdn'] |>>
 }
